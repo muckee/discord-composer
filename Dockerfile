@@ -11,7 +11,6 @@ RUN addgroup -S 1000 && \
 
 # Set home & work directory
 ENV HOME /home/1000
-WORKDIR /home/1000
 
 # Login as filesystem user
 USER 1000
