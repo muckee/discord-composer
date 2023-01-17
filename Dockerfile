@@ -1,7 +1,7 @@
 FROM php:8.2.1-cli
 
 # Update libraries
-RUN apk update
+RUN apt-get update && apt -y upgrade
 
 # Create filesystem user & group & home directory
 RUN addgroup -S 1000 && \
@@ -9,8 +9,9 @@ RUN addgroup -S 1000 && \
     mkdir /home/1000/.ssh && \
     chown -R 1000:1000 /home/1000
 
-# Set home directory
+# Set home & work directory
 ENV HOME /home/1000
+WORKDIR /home/1000
 
 # Login as filesystem user
 USER 1000
