@@ -1,7 +1,7 @@
-FROM php:8.2.1-cli
+FROM composer:latest
 
 # Update libraries
-RUN apt-get update && apt -y upgrade
+RUN apk update
 
 # Create filesystem user & group & home directory
 RUN addgroup -S 1000 && \
