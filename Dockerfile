@@ -6,8 +6,9 @@ RUN apk update
 # Create filesystem user & group & home directory
 RUN addgroup -S 1000 && \
     adduser -S 1000 -G 1000 && \
-    mkdir /home/1000/.ssh && \
-    chown -R 1000:1000 /home/1000
+    mkdir -p /home/1000/.ssh && \
+    chown -R 1000:2000 /home/1000 && \
+    chmod +rwx /home/1000
 
 # Set home & work directory
 ENV HOME /home/1000
