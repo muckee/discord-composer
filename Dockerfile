@@ -17,7 +17,7 @@ RUN chmod +x /usr/local/bin/install-php-extensions && \
     rm /usr/local/bin/install-php-extensions
 
 # Create filesystem user & group & home directory
-RUN adduser --system --group 1000 && \
+RUN adduser --system --group --force-badname 1000 && \
     mkdir -p /home/1000/.ssh && \
     chown -R 1000:2000 /home/1000 && \
     chmod +rwx /home/1000
