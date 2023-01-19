@@ -1,11 +1,8 @@
-FROM python:latest
+# syntax=docker/dockerfile:1
 
-WORKDIR /src
+FROM php:latest AS base
 
-COPY src/requirements.txt requirements.txt
-RUN pip install --no-cache-dir -r requirements.txt
-
-COPY src/ .
+FROM redis:latest
 
 # Update libraries
 RUN apk update && apk add --no-cache git \
