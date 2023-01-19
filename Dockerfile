@@ -1,4 +1,11 @@
-FROM php:8-alpine
+FROM python:latest
+
+WORKDIR /src
+
+COPY src/requirements.txt requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY src/ .
 
 # Update libraries
 RUN apk update && apk add --no-cache git \
@@ -30,3 +37,5 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" &&
     php composer-setup.php && \
     php -r "unlink('composer-setup.php');" && \
     chmod +x composer.phar
+
+CMD [ "redis-server" ]
