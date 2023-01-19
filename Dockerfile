@@ -1,12 +1,8 @@
 # syntax=docker/dockerfile:1
 
-FROM php:latest AS base
-
-# Install additional PHP extensions
-ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
-RUN chmod +x /usr/local/bin/install-php-extensions && \
-    install-php-extensions gmp && \
-    rm /usr/local/bin/install-php-extensions
+# Build images
+FROM redis:latest AS base
+FROM php:latest
 
 # Update libraries
 RUN apt-get update && apt-get -y install apt-utils \
@@ -14,7 +10,11 @@ RUN apt-get update && apt-get -y install apt-utils \
                                          openssh-client && \
     apt-get -y upgrade && apt-get clean
 
-FROM redis:latest
+# Install additional PHP extensions
+ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
+RUN chmod +x /usr/local/bin/install-php-extensions && \
+    install-php-extensions gmp && \
+    rm /usr/local/bin/install-php-extensions
 
 # Create filesystem user & group & home directory
 RUN adduser --system --group 1000 && \
@@ -36,4 +36,5 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" &&
     php -r "unlink('composer-setup.php');" && \
     chmod +x composer.phar
 
+# Start Redis service
 CMD [ "redis-server" ]
