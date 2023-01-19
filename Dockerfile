@@ -2,7 +2,8 @@ FROM php:8-alpine
 
 # Update libraries
 RUN apk update && apk add --no-cache git \
-                                     openssh-client
+                                     openssh-client \
+                                     php-gmp
 
 # Create filesystem user & group & home directory
 RUN addgroup -S 1000 && \
