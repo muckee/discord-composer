@@ -9,15 +9,15 @@ RUN chmod +x /usr/local/bin/install-php-extensions && \
     rm /usr/local/bin/install-php-extensions
 
 # Update libraries
-RUN apt-get update && apt-get -y install git \
+RUN apt-get update && apt-get -y install apt-utils \
+                                         git \
                                          openssh-client && \
     apt-get -y upgrade && apt-get clean
 
 FROM redis:latest
 
 # Create filesystem user & group & home directory
-RUN addgroup -S 1000 && \
-    adduser -S 1000 -G 1000 && \
+RUN adduser --system --group 1000 && \
     mkdir -p /home/1000/.ssh && \
     chown -R 1000:2000 /home/1000 && \
     chmod +rwx /home/1000
