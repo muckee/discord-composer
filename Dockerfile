@@ -2,11 +2,11 @@
 
 FROM php:latest AS base
 
-FROM redis:latest
-
 # Update libraries
 RUN apk update && apk add --no-cache git \
                                      openssh-client
+
+FROM redis:latest
 
 # Install additional PHP extensions
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
