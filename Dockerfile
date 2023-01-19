@@ -3,7 +3,13 @@ FROM php:8-alpine
 # Update libraries
 RUN apk update && apk add --no-cache git \
                                      openssh-client
-RUN apt-get install php8.2-gmp
+
+# Install additional PHP extensions
+ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
+
+RUN chmod +x /usr/local/bin/install-php-extensions && \
+    install-php-extensions gmp && \
+    rm /usr/local/bin/install-php-extensions
 
 # Create filesystem user & group & home directory
 RUN addgroup -S 1000 && \
