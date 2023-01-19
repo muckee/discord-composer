@@ -2,18 +2,18 @@
 
 FROM php:latest AS base
 
+# Install additional PHP extensions
+ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
+RUN chmod +x /usr/local/bin/install-php-extensions && \
+    install-php-extensions gmp && \
+    rm /usr/local/bin/install-php-extensions
+
 # Update libraries
 RUN apt-get update && apt-get -y install git \
                                          openssh-client && \
     apt-get -y upgrade && apt-get clean
 
 FROM redis:latest
-
-# Install additional PHP extensions
-ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
-RUN chmod +x /usr/local/bin/install-php-extensions && \
-    install-php-extensions gmp && \
-    rm /usr/local/bin/install-php-extensions
 
 # Create filesystem user & group & home directory
 RUN addgroup -S 1000 && \
