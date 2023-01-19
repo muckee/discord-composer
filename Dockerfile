@@ -4,8 +4,8 @@ FROM php:latest AS base
 
 # Update libraries
 RUN apt-get update && apt-get -y install git \
-                                      openssh-client && \
-    apt-get upgrade && apt-get clean
+                                         openssh-client && \
+    apt-get -y upgrade && apt-get clean
 
 FROM redis:latest
 
