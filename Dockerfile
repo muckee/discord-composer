@@ -3,8 +3,9 @@
 FROM php:latest AS base
 
 # Update libraries
-RUN apk update && apk add --no-cache git \
-                                     openssh-client
+RUN apt-get update && apt-get install git \
+                                      openssh-client && \
+    apt-get upgrade && apt-get clean
 
 FROM redis:latest
 
