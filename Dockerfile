@@ -22,6 +22,9 @@ RUN adduser --system --group --force-badname 1000 && \
     chown -R 1000:2000 /home/1000 && \
     chmod +rwx /home/1000
 
+RUN groupadd -g 1000 1000 && \
+    useradd -u 1000 -g 1000 -s /bin/sh 1000
+
 # Set home & work directory
 ENV HOME /home/1000
 WORKDIR /home/1000
