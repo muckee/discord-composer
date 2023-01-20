@@ -13,7 +13,7 @@ RUN apt-get update && apt-get -y install apt-utils \
 # Install additional PHP extensions
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
 RUN chmod +x /usr/local/bin/install-php-extensions && \
-    install-php-extensions gmp zip && \
+    install-php-extensions curl gd gmp pear soap xml zip && \
     rm /usr/local/bin/install-php-extensions
 
 RUN groupadd -g 1000 1000 && \
