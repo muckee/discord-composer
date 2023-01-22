@@ -1,13 +1,13 @@
 # syntax=docker/dockerfile:1
 
 # Build images
-FROM redis:latest AS base
 FROM php:latest
 
 # Update libraries
 RUN apt-get update && apt-get -y install apt-utils \
                                          git \
                                          openssh-client && \
+                                         redis-server && \
     apt-get -y upgrade && apt-get clean
 
 # Install additional PHP extensions
@@ -35,6 +35,3 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" &&
     php composer-setup.php && \
     php -r "unlink('composer-setup.php');" && \
     chmod +x composer.phar
-
-# Start Redis service
-CMD [ "redis-server" ]
